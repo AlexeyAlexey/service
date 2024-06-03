@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+SERVICE_APP_PATH = File.expand_path("../config/application", __dir__)
+
+require_relative '../config/environment'
+
+require 'irb'
+
+IRB.start

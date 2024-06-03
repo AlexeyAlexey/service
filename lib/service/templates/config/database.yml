@@ -1,0 +1,17 @@
+default: &default
+  adapter: postgresql
+  user: <%=ENV.fetch('POSTGRES_USER', 'postgres')%>
+  password: <%=ENV.fetch('POSTGRES_PASSWORD', 'postgres')%>
+  host: <%=ENV.fetch('POSTGRES_HOST', '127.0.0.1')%>
+  port: <%=ENV.fetch('POSTGRES_PORT', 5432).to_i%>
+  database: <%=ENV.fetch('POSTGRES_DB', 'postgres')%>
+  max_connections: 1
+
+test:
+  <<: *default
+
+development:
+  <<: *default
+
+production:
+  <<: *default

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis
+
+  restapi:
+    build:
+      context: .
+      dockerfile: restapi.Dockerfile
+    ports:
+      - "3000:3000"
+    # volumes:
+    #   - gem_cache:/gems
+    env_file:
+      - .env/development/database
+      - .env/development/restapi
+    environment:
+      PORT: 3000
+      SERVICE_APP_ENV: 'development'
+      SIDEKIQ_REDIS_URL: 'redis://redis:6379/0'
+
+  jobs:
+    build:
+      context: .
+      dockerfile: jobs.Dockerfile
+    env_file:
+      - .env/development/database
+      - .env/development/jobs
+    environment:
+      SERVICE_APP_ENV: 'development'
+      SIDEKIQ_REDIS_URL: 'redis://redis:6379/0'
+
+  database:
+    image: postgres
+    env_file:
+      - .env/development/database
+
+# volumes:
+#   gem_cache
